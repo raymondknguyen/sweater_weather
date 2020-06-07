@@ -7,5 +7,8 @@ RSpec.describe "Weather Request", :type => :request do
     expect(response).to be_successful
   end
 
-
+  xit "can find background picture" do
+    get '/api/v1/backgrounds?location=denver,co'
+    expect(response).to be_successful
+  end
 end
