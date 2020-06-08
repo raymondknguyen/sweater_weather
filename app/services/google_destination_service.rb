@@ -5,24 +5,24 @@ class GoogleDestinationService
   end 
 
   def travel_time
-    resp['routes'][0]['legs'][0]['duration']['text']
+    response['routes'][0]['legs'][0]['duration']['text']
   end
 
   def end_location
-    resp['routes'][0]['legs'][0]['end_address']
+    response['routes'][0]['legs'][0]['end_address']
   end
 
   def lat 
-    resp['routes'][0]['legs'][0]['end_location']['lat']
+    response['routes'][0]['legs'][0]['end_location']['lat']
   end
 
   def lng
-    resp['routes'][0]['legs'][0]['end_location']['lng']
+    response['routes'][0]['legs'][0]['end_location']['lng']
   end
 
   private
   
-  def resp
+  def response
     JSON.parse(conn.body, symbolize_name: true)
   end
 
