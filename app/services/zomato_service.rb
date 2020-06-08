@@ -13,6 +13,8 @@ class ZomatoService
     response['restaurants'][0]['restaurant']['location']['address']
   end
 
+  private
+
   def response 
     JSON.parse(conn.body, symbolize_name: true)
   end

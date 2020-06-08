@@ -16,20 +16,14 @@ class FoodieFacade
     location_info.end_location
   end
 
-  def summary
-    weather[:current][:weather][0][:description]
-  end
-  
-  def temp
-    weather[:current][:temp].to_i.to_s
+  def forecast
+    { summary: weather[:current][:weather][0][:description],
+    temperature: weather[:current][:temp].to_i.to_s }
   end
 
-  def name
-    restaurant_info.name
-  end
-
-  def address
-    restaurant_info.address
+  def restaurant
+    { name: restaurant_info.name,
+  address: restaurant_info.address }
   end
 
   private

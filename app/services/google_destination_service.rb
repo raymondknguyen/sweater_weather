@@ -20,6 +20,8 @@ class GoogleDestinationService
     resp['routes'][0]['legs'][0]['end_location']['lng']
   end
 
+  private
+  
   def resp
     JSON.parse(conn.body, symbolize_name: true)
   end
