@@ -12,11 +12,11 @@ class WeatherFacade
   end
 
   def current_time
-    DateTime.now.strftime "%I:%M %P, %B %d"
+    DateTime.now.strftime "%I:%M %p, %B %d"
   end
   
   def summary
-    weather_info[:current][:weather][0][:description]
+    weather_info[:current][:weather][0][:description].titleize
   end
 
   def temp
@@ -41,12 +41,12 @@ class WeatherFacade
   
   def sunrise
     sunrise = weather_info[:current][:sunrise] + weather_info[:timezone_offset]
-    DateTime.strptime(sunrise.to_s,'%s').strftime("%I:%M %P")
+    DateTime.strptime(sunrise.to_s,'%s').strftime("%I:%M %p")
   end
 
   def sunset
     sunset = weather_info[:current][:sunset] + weather_info[:timezone_offset]
-    DateTime.strptime(sunset.to_s,'%s').strftime("%I:%M %P")
+    DateTime.strptime(sunset.to_s,'%s').strftime("%I:%M %p")
   end
 
   def temp_high
@@ -56,13 +56,13 @@ class WeatherFacade
   def temp_low
     weather_info[:daily][0][:temp][:min].to_i
   end
-  
+
   def hourly_forecast
     weather_info[:hourly][0..7].map do |forecast|
       { time: DateTime
             .strptime((forecast[:dt] + weather_info[:timezone_offset])
             .to_s,'%s')
-            .strftime("%l %P"), 
+            .strftime("%l %p"), 
         temp: forecast[:temp].to_i }
     end
   end
