@@ -1,11 +1,7 @@
 class Api::V1::ForecastController < ApplicationController
   def index
-     conn = Faraday.get('https://maps.googleapis.com/maps/api/geocode/json') do |f|
-      f.params['key'] = ENV['GOOGLE_GEOCODING_API_KEY']
-      f.params['address'] = params[:location]
-    end
-    location_info = JSON.parse(conn.body, symbolize_names: true)
-  
+    location_info = GeocodeService.new(params[:location]).location_info
+
     lat = location_info[:results][0][:geometry][:location][:lat]
     lng = location_info[:results][0][:geometry][:location][:lng]
 
@@ -15,19 +11,14 @@ class Api::V1::ForecastController < ApplicationController
 
     current_time = DateTime.now.strftime "%I:%M %P, %B %d"
 
-    resp = Faraday.get('https://api.openweathermap.org/data/2.5/onecall') do |f|
-      f.params[:appid] = ENV['WEATHER_API_KEY']
-      f.params[:lat] = lat
-      f.params[:lon] = lng
-      f.params[:units] = "imperial"
-    end
-    weather_info = JSON.parse(resp.body, symbolize_names: true)
+
+    weather_info = WeatherService.new(lat, lng).weather_info
 
     summary = weather_info[:current][:weather][0][:description]
     temp = weather_info[:current][:temp]
     feels_like = weather_info[:current][:feels_like]
     humidity = weather_info[:current][:humidity]
-    visibility = weather[:current][:visibility] 
+    visibility = weather_info[:current][:visibility] 
     uv_index = weather_info[:current][:uvi]
 
     sunrise = weather_info[:current][:sunrise] + weather_info[:timezone_offset]
@@ -60,7 +51,5 @@ class Api::V1::ForecastController < ApplicationController
         temp_max: forecast[:temp][:max].to_i,
         temp_min: forecast[:temp][:min].to_i }
     end 
-
-    binding.pry
   end
 end

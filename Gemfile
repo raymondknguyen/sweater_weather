@@ -28,7 +28,7 @@ gem 'rspec-rails'
 gem 'faraday'
 gem 'pry'
 gem 'fast_jsonapi'
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'figaro'
 
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
