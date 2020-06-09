@@ -13,5 +13,6 @@ RSpec.describe "User Request", :type => :request do
     expect(data[:data][:type]).to eq("user")
     expect(data[:data][:attributes][:email]).to eq("email@email.com")
     expect(data[:data][:attributes][:api_key]).to_not be_nil
+    expect(response.status).to eq(201)
   end
 end
