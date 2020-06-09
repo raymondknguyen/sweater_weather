@@ -10,14 +10,14 @@ class BackgroundService
     get_picture[:results][0][:urls][:raw]
   end
 
+  private
+
   def get_picture
     JSON.parse(resp.body, symbolize_names: true)
   end
-
-  private
-
+  
   def resp
-   response = Faraday.get('https://api.unsplash.com/search/photos') do |f|
+   Faraday.get('https://api.unsplash.com/search/photos') do |f|
       f.params['client_id'] = ENV['UNSPLASH_API_KEY']
       f.params['query'] = @location
     end
