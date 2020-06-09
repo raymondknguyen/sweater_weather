@@ -63,7 +63,8 @@ class WeatherFacade
             .strptime((forecast[:dt] + weather_info[:timezone_offset])
             .to_s,'%s')
             .strftime("%l %p"), 
-        temp: forecast[:temp].to_i }
+        temp: forecast[:temp].to_i,
+        summary: forecast[:weather][0][:description] }
     end
   end
 
