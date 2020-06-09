@@ -4,6 +4,10 @@ class GoogleDestinationService
     @des = des
   end 
 
+  def travel_time_value
+    response['routes'][0]['legs'][0]['duration']['value']
+  end
+
   def travel_time
     response['routes'][0]['legs'][0]['duration']['text']
   end
@@ -19,12 +23,11 @@ class GoogleDestinationService
   def lng
     response['routes'][0]['legs'][0]['end_location']['lng']
   end
-
-  private
   
   def response
     JSON.parse(conn.body, symbolize_name: true)
   end
+  private
 
   def conn
     Faraday.get('https://maps.googleapis.com/maps/api/directions/json') do |f|
