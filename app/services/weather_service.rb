@@ -14,13 +14,4 @@ class WeatherService
 
     JSON.parse(resp.body, symbolize_names: true)
   end
-
-  def resp
-    Faraday.get('https://api.openweathermap.org/data/2.5/onecall') do |f|
-      f.params[:appid] = ENV['WEATHER_API_KEY']
-      f.params[:lat] = @lat
-      f.params[:lon] = @lng
-      f.params[:units] = "imperial"
-    end
-  end
 end
